@@ -1,0 +1,5 @@
+SELECT COUNT(USER_ID) FROM twitter.liked AS L
+WHERE L.TWEET_ID = 6 
+AND NOT EXISTS(
+SELECT * FROM twitter.blocked AS B, twitter.tweet AS T
+WHERE T.ID = 6 AND T.USER_ID = B.SRC_ID AND B.DEST_ID = 'Stalin00')

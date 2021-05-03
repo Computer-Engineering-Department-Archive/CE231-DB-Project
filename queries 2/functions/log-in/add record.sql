@@ -1,0 +1,1 @@
+INSERT INTO twitter.login VALUES('bardiArdakanian', current_date())

@@ -1,0 +1,1 @@
+SELECT * FROM twitter.user WHERE ID='bardiArdakanian'

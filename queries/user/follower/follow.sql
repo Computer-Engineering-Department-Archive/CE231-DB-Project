@@ -1,0 +1,1 @@
+INSERT INTO twitter.follower VALUES('bardiArdakanian', 'Stalin00')
