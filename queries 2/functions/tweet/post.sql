@@ -1,1 +1,0 @@
-INSERT INTO twitter.tweet (USER_ID, CONTENT, POSTAGE) VALUES('bardiArdakanian', 'I just took an exam... Im gonna be unemployed:)', current_date())

@@ -1,6 +1,0 @@
-SELECT * FROM twitter.reply AS R, twitter.tweet AS T1, twitter.tweet AS T2
-WHERE (R.TWEET_ID = T1.ID) AND (R.REPLY_ID = T2.ID) AND TWEET_ID=6
-AND NOT EXISTS (
-	SELECT * FROM twitter.blocked AS B
-	WHERE (T1.USER_ID = B.SRC_ID AND T2.USER_ID = B.DEST_ID) OR (T1.USER_ID = B.DEST_ID AND T2.USER_ID = B.SRC_ID)
-)

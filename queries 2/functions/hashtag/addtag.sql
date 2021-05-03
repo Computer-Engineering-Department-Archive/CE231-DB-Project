@@ -1,1 +1,0 @@
-INSERT INTO twitter.hashtag VALUES(11, '#fffff')
