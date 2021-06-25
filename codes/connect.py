@@ -5,7 +5,7 @@ def connect():
     db = mysql.connector.connect(
         host='localhost',
         username='root',
-        password='password1234',
+        password='root12345678',
         database='twitter',
         port='2000'
     )

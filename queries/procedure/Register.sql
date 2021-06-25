@@ -13,6 +13,7 @@ BEGIN
 	INSERT IGNORE
     INTO twitter.user
     VALUES(FIRSTNAME, LASTNAME, ID, SHA2(password, 256), BORN, JOINED, BIO);
+    CALL AddSession(ID);
 END //
 
 DELIMITER ;

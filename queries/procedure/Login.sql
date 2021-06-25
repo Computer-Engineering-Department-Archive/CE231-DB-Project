@@ -8,6 +8,7 @@ BEGIN
 	SELECT *
 	FROM twitter.user AS U
 	WHERE U.ID = username AND U.PASSWORD_HASH = SHA2(password, 256);
+    CALL AddSession(username);
 END //
 
 DELIMITER ;

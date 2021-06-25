@@ -1,5 +1,6 @@
 def refactor(src):
     src = src[4:-1].strip()
+    src = src.replace(', U', ' : U')
     src = src.replace('\', ', ' : ')
     src = src.replace('), ', ') : ')
     src = src.replace('datetime.', '')
@@ -7,12 +8,19 @@ def refactor(src):
     return src
 
 
+def fetch(result):
+    return next(result).fetchall()
+
+
 def get_table(rows):
     table = []
     keys = {}
 
     for row in rows:
+        # print(row)
         result = refactor(str(row))
+        # print(result)
+        # print()
 
         column = {}
 
@@ -90,5 +98,17 @@ def pretty_table(table, keys):
         builder = builder + '\n'
 
     builder = builder + header(columns, corner, vertical, length, keys)
+
+    print(builder)
+
+
+def display_tweets(table, keys):
+    builder = ''
+    for i in range(0, len(table)):
+        builder = builder + '-----------------------------------------------------------------\n'
+        builder = builder + 'username: ' + table[i].get('USER_ID') + '\n'
+        builder = builder + table[i].get('CONTENT') + '\n'
+        builder = builder + table[i].get('POSTAGE') + '\n'
+        builder = builder + '-----------------------------------------------------------------\n\n'
 
     print(builder)

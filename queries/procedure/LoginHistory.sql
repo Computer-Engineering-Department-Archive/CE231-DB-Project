@@ -1,0 +1,11 @@
+DELIMITER //
+
+CREATE PROCEDURE LoginHistory (
+)
+BEGIN
+	SELECT * 
+    FROM twitter.login 
+    ORDER BY TIME DESC;
+END //
+
+DELIMITER ;
