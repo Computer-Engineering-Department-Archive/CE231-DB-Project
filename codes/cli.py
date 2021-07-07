@@ -1,51 +1,77 @@
+from datetime import datetime
+
 import connect
 import callproc
 import load
 
 
 def index():
-    print('welcome to Twitter:)')
-    print('1.Register\n2.Login')
+    log = False
 
-    res = None
-
-    while res is None:
-        uin = int(input())
+    while not log:
+        uin = int(input('welcome to Twitter:)\n1.Register\n2.Login\n'))
 
         if uin == 1:
-            print('please insert your personal info: [firstname, lastname, id, password, born, joined, bio]')
-            callproc.register(cursor, [input(), input(), input(), input(), input(), input(), input()])
+            print('please insert your personal information')
+            callproc.register(cursor, [input('firstname: '), input('lastname: '),
+                                       input('username: '), input('password: '),
+                                       input('date of birth: '), datetime.today().strftime('%Y-%m-%d'), 'biography: '])
+            print('account created, welcome to Twitter')
+            log = True
         elif uin == 2:
-            res = callproc.login(cursor, [input(), input()])
-            res = next(res).fetchall()
+            res = callproc.login(cursor, [input('username: '), input('password: ')])
+            res = load.fetch(res)[0][0]
 
-            if len(res) == 0:
-                print('invalid username or password')
-                res = None
+            if res == 1:
+                log = True
+                print('welcome back')
+            else:
+                print('username or password is incorrect, try again')
         else:
             print('invalid input')
 
-    table = None
-    keys = None
 
-    table, keys = load.get_table(res)
+def menu():
+    end = False
 
-    # username = load.get_username(table)
-    # print('you logged in as:', username)
+    # commands
+    # -lh                       login history
+    # -t                        tweet
+    # -pt                       personal tweets
+    while True:
+        uin = input('> ')
+        dec = uin.split()
+
+        cmd = dec[0]
+
+        print(dec)
+
+        if cmd == '-lh':
+            callproc.login_history(cursor)
+        elif cmd == '-t':
+            content = uin[len(cmd) + 1:]
+
+            if len(content) > 256:
+                print('tweet character limit is 256')
+                continue
+
+            callproc.tweet(cursor, [content])
+        elif cmd == '-pt':
+            if len(dec) > 1:
+                print('invalid input')
+                continue
+
+            result = callproc.get_personal_tweet(cursor)
+            load.display_tweets(load.get_table(load.fetch(result)))
+        if cmd == 'exit':
+            break
+
+    callproc.commit(db)
 
 
 if __name__ == '__main__':
     db = connect.connect()
-    # cursor = connect.get_cursor(db)
     cursor = db.cursor(named_tuple=False)
 
     # index()
-    # args = ['#ccccc #bbbbb']
-    # callproc.tweet(cursor, args)
-    # result = callproc.get_tweet_list(cursor)
-    # x = next(result).fetchall()
-    # print(x)
-    # table, keys = load.get_table(load.fetch(result))
-    # load.display_tweets(table, keys)
-
-    callproc.commit(db)
+    menu()

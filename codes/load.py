@@ -1,9 +1,6 @@
 def refactor(src):
-    src = src[4:-1].strip()
-    src = src.replace(', U', ' : U')
-    src = src.replace('\', ', ' : ')
-    src = src.replace('), ', ') : ')
-    src = src.replace('datetime.', '')
+    src = src[1:-1].strip()
+    src = src.replace(', ', ' : ')
 
     return src
 
@@ -14,7 +11,6 @@ def fetch(result):
 
 def get_table(rows):
     table = []
-    keys = {}
 
     for row in rows:
         # print(row)
@@ -22,29 +18,23 @@ def get_table(rows):
         # print(result)
         # print()
 
-        column = {}
+        row = []
 
-        for index, i in enumerate(result.split(' : ')):
-            pair = i.strip().split('=')
+        for i in result.split(' : '):
+            row.append(i)
 
-            key = pair[0]
-            value = pair[1].replace('\'', '')
+        table.append(row)
 
-            keys[index] = key
-            column[key] = value
-
-        table.append(column)
-
-    return table, keys
+    return table
 
 
 def display_tweets(table):
     builder = ''
-    for i in range(0, len(table)):
-        builder = builder + '-----------------------------------------------------------------\n'
-        builder = builder + 'username: <' + table[i].get('USER_ID') + '> tid: <' + table[i].get('ID') + '>\n'
-        builder = builder + table[i].get('CONTENT') + '\n'
-        builder = builder + table[i].get('POSTAGE') + '\n'
-        builder = builder + '-----------------------------------------------------------------\n\n'
+    for row in table:
+        builder = builder + '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n'
+        builder = builder + 'username: <' + row[1] + '> tid: <' + row[0] + '>\n\n'
+        builder = builder + '> ' + row[2][1:-1] + '\n\n'
+        builder = builder + row[3][14:] + '-' + row[4] + '-' + row[5][0:-1] + '\n'
+        builder = builder + '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n'
 
     print(builder)

@@ -1,0 +1,4 @@
+CREATE TABLE twitter.hashtag(
+    TWEET_ID					INT NOT NULL,
+    TAG						NVARCHAR(6) NOT NULL,
+    FOREIGN KEY (TWEET_ID) REFERENCES twitter.tweet(ID) ON DELETE CASCADE)

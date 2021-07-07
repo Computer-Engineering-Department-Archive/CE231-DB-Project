@@ -27,8 +27,6 @@ def contains_user(cursor, args):
 def register(cursor, args):
     cursor.callproc('Register', args)
 
-    print(cursor.rowcount, "record inserted.")
-
 
 def login_history(cursor):
     cursor.callproc('LoginHistory')
@@ -38,6 +36,12 @@ def login_history(cursor):
 
 def tweet(cursor, args):
     cursor.callproc('Tweet', args)
+
+
+def get_personal_tweet(cursor):
+    cursor.callproc('GetPersonalTweet')
+
+    return cursor.stored_results()
 
 
 def get_user_tweet(cursor, args):
