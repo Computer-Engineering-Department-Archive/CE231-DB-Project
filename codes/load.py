@@ -38,75 +38,11 @@ def get_table(rows):
     return table, keys
 
 
-def get_username(table):
-    return table[0].get('ID')
-
-
-def header(columns, corner, vertical, length, keys):
-    builder = ''
-    for i in range(columns):
-        if keys[i] == 'PASSWORD_HASH':
-            builder = builder + corner + vertical * 130 + corner
-            continue
-
-        if keys.get(i) == 'BIOGRAPHY':
-            builder = builder + corner + vertical * 70 + corner
-            continue
-
-        builder = builder + corner + vertical * length + corner
-    builder = builder + '\n'
-
-    return builder
-
-
-def pretty_table(table, keys):
-    corner = '+'
-    vertical = '-'
-
-    length = 20
-
-    columns = len(keys)
-    rows = len(table)
-
-    builder = ''
-    builder = builder + header(columns, corner, vertical, length, keys)
-
-    for i in range(columns):
-        if keys[i] == 'PASSWORD_HASH':
-            builder = builder + '| {:^128s} |'.format(keys[i])
-            continue
-
-        if keys.get(i) == 'BIOGRAPHY':
-            builder = builder + '| {:^68s} |'.format(keys[i])
-            continue
-
-        builder = builder + '| {:^18s} |'.format(keys[i])
-    builder = builder + '\n'
-
-    builder = builder + header(columns, corner, vertical, length, keys)
-
-    for i in range(rows):
-        for j in range(len(table[i])):
-            if keys[j] == 'PASSWORD_HASH':
-                builder = builder + '| {:^128s} |'.format(table[i].get(keys[j]))
-                continue
-
-            if keys.get(j) == 'BIOGRAPHY':
-                builder = builder + '| {:^68s} |'.format(table[i].get(keys[j]))
-                continue
-            builder = builder + '| {:^18s} |'.format(table[i].get(keys[j]))
-        builder = builder + '\n'
-
-    builder = builder + header(columns, corner, vertical, length, keys)
-
-    print(builder)
-
-
-def display_tweets(table, keys):
+def display_tweets(table):
     builder = ''
     for i in range(0, len(table)):
         builder = builder + '-----------------------------------------------------------------\n'
-        builder = builder + 'username: ' + table[i].get('USER_ID') + '\n'
+        builder = builder + 'username: <' + table[i].get('USER_ID') + '> tid: <' + table[i].get('ID') + '>\n'
         builder = builder + table[i].get('CONTENT') + '\n'
         builder = builder + table[i].get('POSTAGE') + '\n'
         builder = builder + '-----------------------------------------------------------------\n\n'

@@ -30,20 +30,22 @@ def index():
 
     table, keys = load.get_table(res)
 
-    username = load.get_username(table)
-    print('you logged in as:', username)
+    # username = load.get_username(table)
+    # print('you logged in as:', username)
 
 
 if __name__ == '__main__':
     db = connect.connect()
-    cursor = connect.get_cursor(db)
+    # cursor = connect.get_cursor(db)
+    cursor = db.cursor(named_tuple=False)
 
     # index()
     # args = ['#ccccc #bbbbb']
     # callproc.tweet(cursor, args)
-
-    result = callproc.get_hashtag(cursor, ['#bbbbb'])
-    table, keys = load.get_table(load.fetch(result))
-    load.display_tweets(table, keys)
+    # result = callproc.get_tweet_list(cursor)
+    # x = next(result).fetchall()
+    # print(x)
+    # table, keys = load.get_table(load.fetch(result))
+    # load.display_tweets(table, keys)
 
     callproc.commit(db)

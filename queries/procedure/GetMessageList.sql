@@ -1,0 +1,17 @@
+DELIMITER //
+
+CREATE PROCEDURE GetMessageList (
+)
+BEGIN
+	CALL ActiveSession(@ID);
+
+	SELECT *
+	FROM twitter.message AS M
+	WHERE TYPE=0 AND RECEIVER_ID = @ID
+    AND NOT EXISTS (SELECT *
+					FROM twitter.blocked AS B
+					WHERE B.SRC_ID = @ID AND B.DEST_ID = M.SENDER_ID)
+	ORDER BY POSTAGE DESC;
+END //
+
+DELIMITER ;

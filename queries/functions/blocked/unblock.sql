@@ -1,1 +1,0 @@
-DELETE FROM twitter.blocked WHERE SRC_ID='bardiArdakanian' and DEST_ID='Stalin00'

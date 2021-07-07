@@ -1,6 +1,0 @@
-CREATE TABLE twitter.blocked(
-	SRC_ID				NVARCHAR(20),
-    DEST_ID				NVARCHAR(20),
-    PRIMARY KEY (SRC_ID, DEST_ID),
-    FOREIGN KEY (SRC_ID) REFERENCES twitter.user(ID),
-    FOREIGN KEY (DEST_ID) REFERENCES twitter.user(ID))

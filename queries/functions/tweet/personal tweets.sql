@@ -1,1 +1,0 @@
-SELECT * FROM twitter.tweet WHERE USER_ID='bardiArdakanian'

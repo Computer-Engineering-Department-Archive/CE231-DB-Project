@@ -1,4 +1,0 @@
-CREATE TABLE twitter.login(
-	ID					NVARCHAR(20) NOT NULL,
-    TIME				DATE NOT NULL,
-    FOREIGN KEY (ID) REFERENCES twitter.user(ID))

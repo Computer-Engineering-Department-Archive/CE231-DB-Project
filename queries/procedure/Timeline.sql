@@ -1,0 +1,16 @@
+DELIMITER //
+
+CREATE PROCEDURE Timeline (
+)
+BEGIN
+	CALL ActiveSession(@ID);
+    
+	SELECT T.ID, T.USER_ID, T.CONTENT, T.POSTAGE
+	FROM twitter.tweet as T
+    WHERE 
+    T.USER_ID IN (SELECT DEST_ID FROM twitter.follower WHERE SRC_ID=@ID)
+	AND NOT EXISTS (SELECT * FROM twitter.blocked WHERE SRC_ID=@ID and DEST_ID=T.USER_ID)
+    ORDER BY T.POSTAGE DESC;
+END //
+
+DELIMITER ;
