@@ -5,9 +5,9 @@ CREATE PROCEDURE ActiveSession (
 )
 BEGIN
 	SET ID=(
-	SELECT login.ID
-	FROM twitter.login 
-    ORDER BY id 
+	SELECT L.ID
+	FROM twitter.login AS L
+    ORDER BY L.pk
     DESC LIMIT 1);
 END //
 

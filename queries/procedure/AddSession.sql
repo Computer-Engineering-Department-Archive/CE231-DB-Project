@@ -5,7 +5,7 @@ CREATE PROCEDURE AddSession (
 )
 BEGIN
 	INSERT
-    INTO twitter.login 
+    INTO twitter.login (ID, TIME)
     VALUES(ID, current_date());
 END //
 

@@ -13,7 +13,7 @@ BEGIN
 				FROM tweet
                 WHERE ID = tid); -- sender id
     
-	SELECT *
+	SELECT ID, USER_ID, CONTENT, OSTAGE
     FROM tweet
     WHERE ID IN (SELECT REPLY_ID
 					FROM reply
