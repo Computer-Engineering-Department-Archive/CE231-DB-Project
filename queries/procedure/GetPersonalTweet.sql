@@ -7,7 +7,8 @@ BEGIN
 
 	SELECT *
     FROM twitter.tweet
-    WHERE tweet.USER_ID = @ID;
+    WHERE USER_ID = @ID
+    ORDER BY POSTAGE DESC;
 END //
 
 DELIMITER ;

@@ -88,7 +88,7 @@ def help_message():
           'block [username]\n' +
           'unblock [username]\n' +
           'timeline\n' +
-          'user activity [username]\n' +
+          'userack::user activity [username]\n' +
           'reply <-p [id, content], -s[show]>\n' +
           'hashtag [tag]\n' +
           'like <-u::upvote [id], -c::count [id], -l::list [id], -t::trend>\n' +
@@ -100,7 +100,7 @@ def help_message():
 def message(dec):
     if dec[1] == 'send':  # send
         if dec[2] == '-m':  # message
-            if len(dec) != 5:
+            if len(dec) <= 4:
                 print('invalid input')
                 return
 
@@ -117,14 +117,14 @@ def message(dec):
                 print('invalid input')
                 return
 
-            result = callproc.send_message(cursor, [dec[3]])
+            result = callproc.get_message(cursor, [dec[3]])
             print(load.fetch(result))
         elif dec[2] == '-t':  # tweet
             if len(dec) != 4:
                 print('invalid input')
                 return
 
-            result = callproc.send_tweet(cursor, [dec[3]])
+            result = callproc.get_tweet(cursor, [dec[3]])
             print(load.fetch(result))
     elif dec[1] == 'getl':  # get list
         if dec[2] == '-m':  # message
@@ -165,7 +165,7 @@ def like(dec):
         result = callproc.upvote_list(cursor, [dec[2]])
         print(load.fetch(result))
     elif dec[1] == '-t':  # trend
-        if len(dec) != 3:
+        if len(dec) != 2:
             print('invalid input')
             return
 
@@ -184,11 +184,18 @@ def hashtag(dec):
 
 def reply(dec):
     if dec[1] == '-p':  # post
-        if len(dec) != 4:
+        if len(dec) <= 3:
             print('invalid input')
             return
 
-        callproc.reply(cursor, [dec[2], dec[3]])
+        content = ' '.join(dec[3:])
+        print(content)
+
+        if len(content) > 256:
+            print('tweet character limit is 256')
+            return
+
+        callproc.reply(cursor, [dec[2], content])
     elif dec[1] == '-s':  # show
         if len(dec) != 3:
             print('invalid input')
@@ -258,7 +265,7 @@ def tweet(dec, uin):
 
         callproc.tweet(cursor, [content])
     elif dec[1] == '-s':  # self
-        if len(dec) != 3:
+        if len(dec) != 2:
             print('invalid input')
             return
 
@@ -271,7 +278,8 @@ def active_session(dec):
         print('invalid input')
         return
 
-    callproc.login_history(cursor)
+    result = callproc.login_history(cursor)
+    print(load.fetch(result))
 
 
 if __name__ == '__main__':
